@@ -1,0 +1,15 @@
+﻿@model tutorial_mvc.Models.Movie
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Movie Detail";
+    ViewData["css"] = "home.css";
+}
+
+{
+    "@nameof(Model.Id)": @Html.TextBoxFor(model => model.Id).ToString().Replace("\"", "\\\""),
+    "@nameof(Model.Title)": @Html.TextBoxFor(model => model.Title).ToString().Replace("\"", "\\\""),
+    "@nameof(Model.Category)": @Html.TextBoxFor(model => model.Category).ToString().Replace("\"", "\\\""),
+    "@nameof(Model.Price)": @Html.TextBoxFor(model => model.Price).ToString().Replace("\"", "\\\""),
+    "@nameof(Model.ReleaseDate)": @Html.TextBoxFor(model => model.ReleaseDate).ToString().Replace("\"", "\\\""),
+}

@@ -1,0 +1,47 @@
+﻿@model tutorial_mvc.Models.Movie
+
+@{
+    ViewData["Title"] = "Movie Detail";
+    ViewData["css"] = "home.css";
+    var ja = new System.Globalization.CultureInfo("ja-JP", false);
+    ja.DateTimeFormat.Calendar = new System.Globalization.GregorianCalendar(System.Globalization.GregorianCalendarTypes.Localized);
+    System.Threading.Thread.CurrentThread.CurrentCulture = ja;
+
+}
+
+<form asp-action="MovieUpd" class="needs-validation" novalidate>
+    <div asp-validation-summary="ModelOnly" class="alert-area alert alert-danger mt-3" style="vertical-align: middle;"></div>
+    <div class="wrapper form-group">
+        <div class="fs-3">情報</div>
+        <div class="grid" style="grid-template-columns: repeat(2, 1fr) ;">
+            <div class="form-group">
+                <div class="fs-6">@Html.DisplayNameFor(movie => movie.Title)</div>
+                @Html.TextBoxFor(movie => movie.Title, 
+                                 new { @class = "form-control", style=""}
+                                 )
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="fs-6">@Html.DisplayNameFor(movie => movie.Price)</div>
+                @Html.TextBoxFor(movie => movie.Price, 
+                                 "{0:C0}",
+                                 new { @class = "form-control"})
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="fs-6">@Html.DisplayNameFor(movie => movie.ReleaseDate)</div>
+                @Html.TextBoxFor(movie => movie.ReleaseDate, 
+                                 "{0:ggyy年M月d日}",
+                                 new { @class = "form-control"})
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="button-area gap-5">
+        <button class="btn btn-secondary" type="submit" style="grid-area: prev;">戻る</button>
+        <button class="btn btn-primary" type="submit" style="grid-area: send;">送信</button>
+        <button class="btn btn-danger" type="submit" style="grid-area: del;">削除</button>
+    </div>
+    </div>
+</form>

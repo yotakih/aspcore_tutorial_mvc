@@ -1,0 +1,44 @@
+.grid {
+  display: grid;
+}
+
+.grid div {
+  margin: 0.25rem;
+}
+
+.grid div div.fs-6 {
+  margin-bottom: 0.25rem;
+}
+
+.button-area {
+  display: grid;
+  grid-template-areas: ". prev . send . del .";
+  grid-template-columns: 1fr 5rem 0.5rem 5rem 0.5rem 5rem 1fr;
+}
+
+.alert-area ul {
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: var(--cl);
+  justify-content: left;
+}
+
+.grid .cell {
+  --rw: auto;
+  grid-row: var(--rw);
+  --cl: auto;
+  grid-column: var(--cl);
+  border: solid 1px rgba(0, 0, 0, 0.4);
+  --bg: white;
+  background-color: var(--bg);
+  --op: 1;
+  opacity: var(--op);
+  padding: 0.25rem;
+}
+
+.vertical {
+  writing-mode: vertical-rl;
+}

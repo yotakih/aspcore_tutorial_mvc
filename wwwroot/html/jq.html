@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+		crossorigin="anonymous"></script>
+	<!-- vue.js -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
+
+	<!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+	<!-- jquery -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<title>
+		test
+	</title>
+	<style>
+		.grid {
+			display: grid;
+			grid-template-columns: var(--cl);
+			justify-content: left;
+		}
+
+		.grid .cell {
+			--rw: auto;
+			grid-row: var(--rw);
+			--cl: auto;
+			grid-column: var(--cl);
+			border: solid 1px rgba(0, 0, 0, 0.4);
+			--bg: white;
+			background-color: var(--bg);
+			--op: 1.0;
+			opacity: var(--op);
+			padding: 0.25rem;
+		}
+
+		.vertical {
+			writing-mode: vertical-rl;
+		}
+
+		.button-area {
+			display: grid;
+			grid-template-areas: ". prev send del .";
+			grid-template-columns: 1fr repeat(3, 5rem) 1fr;
+		}
+	</style>
+
+	<script type="text/javascript">
+				$(function () {
+
+			function repcontent(jsn) {
+				Object.keys(jsn).forEach((key) => {
+					console.log(`${key}: ${jsn[key]}`)
+					$(key).html(jsn[key])
+				})
+			}
+
+			$.ajax({
+				type: 'GET',
+				url: '/nodejs/init',
+				dataType: 'json',
+				complete: (xhr, status) => {
+					console.log('complete')
+					console.log(xhr.responseJSON)
+					repcontent(xhr.responseJSON)
+				},
+				error: (xhr, status, error) => {
+					console.log('error')
+					console.log(xhr)
+				},
+			})
+
+			$('form').submit(function (event) {
+				$('.errs').html('')
+				$.ajax({
+					type: this['method'],
+					url: this['action'],
+					data: $(this).serialize(),
+					dataType: 'json',
+					complete: (xhr, status) => {
+						repcontent(xhr.responseJSON)
+					},
+					error: (xhr, status, error) => {
+						console.log(`error`)
+						console.log(error)
+					}
+				});
+				return false;
+			})
+		})
+	</script>
+
+
+</head>
+
+<body>
+
+	<div id="app">
+		<form id="myform" method="POST" action="/Home/Test">
+			<div class="fs-3">テスト</div>
+			<div class="grid" style="--cl: repeat(2, auto);">
+				<div class="form-group">
+					<div class="fs-6">テキスト</div>
+					<input class="form-control" id="Text" name="Text" type="text" value="" />
+					<span class="text-danger field-validation-valid"></span>
+				</div>
+				<div class="form-group">
+					<div class="fs-6">チェック</div>
+					<input id="Check" name="Check" type="checkbox" value="true" />
+					<label for="Check">あり</label>
+					<span class="text-danger field-validation-valid"></span>
+				</div>
+				<div class="form-group">
+					<div class="fs-6">ドロップ</div>
+					<select class="form-control" id="Drop" name="Drop">
+						<option value="1">テスト1</option>
+						<option value="2">テスト2</option>
+						<option value="3">テスト3</option>
+					</select>
+					<span class="text-danger field-validation-valid"></span>
+				</div>
+				<div class="form-group">
+					<div class="fs-6">リスト</div>
+					<select class="form-control" id="Listbox" multiple="multiple" name="Listbox">
+						<option value="1">テスト1</option>
+						<option value="2">テスト2</option>
+						<option value="3">テスト3</option>
+					</select>
+					<span class="text-danger field-validation-valid"></span>
+				</div>
+			</div>
+	</div>
+	<div>
+		<input type="submit" value="send" />
+	</div>
+	<input name="__RequestVerificationToken" type="hidden"
+		value="CfDJ8OJlez_uz2tCp5EGV6LJoBJcpDTJgkX-bUKimWtvObm9C-EAQDngI9y51VGI3Aa9woXTWblYWPmv3db0pZo92buFdhEysKDg9y7SQjPXcYzx3SB6JZgnV6i-RvUSWl4BC_sOxIkLCxLYscn_UenDqgc" />
+	</form>
+	</div>
+
+</body>
+
+</html>

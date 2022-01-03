@@ -1,0 +1,25 @@
+﻿@model tutorial_mvc.Models.Test
+
+@{
+    ViewData["Title"] = "TestInitData";
+}
+
+<div id="model-text">
+    @Html.TextBoxFor(m => m.Text,
+    new { @class = "form-control", style=""}
+    )
+</div>
+<div id="model-check">
+    @Html.CheckBoxFor(m => m.Check,
+    new { @class = "form-control"})あり
+</div>
+<div id="model-drop">
+    @Html.DropDownListFor(m => m.Drop,
+    new SelectList(Model.Drop_op, "Value", "Text"),
+    new { @class = "form-control"})
+</div>
+<div id="model-list">
+    @Html.ListBoxFor(m => m.Listbox,
+    new SelectList(Model.Listbox_op, "Value", "Text"),
+    new { @class = "form-control"})
+</div>
