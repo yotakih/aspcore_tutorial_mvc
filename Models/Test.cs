@@ -1,15 +1,25 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Html;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace tutorial_mvc.Models
 {
+	public class DataTypeInfo
+	{
+		public string Type = "";
+		public int Length = 0;
+	}
 	public class Test
 	{
+		public static Dictionary<string, DataTypeInfo> DataInfo = new Dictionary<string, DataTypeInfo>()
+		{
+			{nameof(Test.Text), new DataTypeInfo() { Type = "text", Length = 10 }},
+		};
+
 		[Required]
 		[Display(Name = "テキスト")]
 		public string Text { get; set; }
@@ -35,14 +45,11 @@ namespace tutorial_mvc.Models
 		[Display(Name = "チェック")]
 		public bool Check { get; set; }
 
-		public static InlineValidator<Movie> Validator
-			= new InlineValidator<Movie>{
-				v => v.RuleFor(x => x.Price).GreaterThan(1000)
-			};
-
-		public static FluentValidation.Results.ValidationResult Validate(Movie x)
+		public static Expression<Func<TModel, TResult>> GetExpression<TModel, TResult>(string prpName)
 		{
-			return Validator.Validate(x);
+			ParameterExpression arg = Expression.Parameter(typeof(Test), "Model");
+			MemberExpression prp = Expression.Property(arg, prpName);
+			return Expression.Lambda<Func<TModel, TResult>>(prp, arg);
 		}
 	}
 }
