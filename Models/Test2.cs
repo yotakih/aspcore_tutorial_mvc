@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Html;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace tutorial_mvc.Models
@@ -33,14 +32,5 @@ namespace tutorial_mvc.Models
 		[Display(Name = "チェック")]
 		public bool Check { get; set; }
 
-		public static InlineValidator<Movie> Validator
-			= new InlineValidator<Movie>{
-				v => v.RuleFor(x => x.Price).GreaterThan(1000)
-			};
-
-		public static FluentValidation.Results.ValidationResult Validate(Movie x)
-		{
-			return Validator.Validate(x);
-		}
 	}
 }

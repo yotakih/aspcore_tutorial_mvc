@@ -1,14 +1,30 @@
 ﻿@model tutorial_mvc.Models.Test
-
+@using CurModel = tutorial_mvc.Models.Test
 @{
     ViewData["Title"] = "TestInitData";
 }
 
-<div id="model-text">
+@foreach (var prp in typeof(CurModel).GetProperties())
+{
+    var Inf = CurModel.DataInfo.ContainsKey(prp.Name) ? CurModel.DataInfo[prp.Name] : null;
+    if (Inf is not null) {
+        <div id="model-@prp.Name.ToLower()">
+        @if (Inf.Type == "text")
+        {
+            @Html.TextBoxFor(CurModel.GetExpression<CurModel, object>(prp.Name))
+        }
+        </div>
+    }
+}
+
+@* <div id="model-text">
     @Html.TextBoxFor(m => m.Text,
     new { @class = "form-control", style=""}
     )
-</div>
+    @Html.TextBoxFor(Test.GetExpression<Test, object>(nameof(Model.Text)),
+    new { @class = "form-control", style=""}
+    )
+</div> *@
 <div id="model-check">
     @Html.CheckBoxFor(m => m.Check,
     new { @class = "form-control"})あり
