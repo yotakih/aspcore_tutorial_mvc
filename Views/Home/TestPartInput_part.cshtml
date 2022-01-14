@@ -1,0 +1,34 @@
+﻿@model tutorial_mvc.Models.TestPartInputM
+@using tutorial_mvc.Utils
+@using CurModel = tutorial_mvc.Models.TestPartInputM
+
+@{
+    var dic = Model.GetDataInfo();
+    @foreach (var prp in typeof(CurModel).GetProperties())
+    {
+        var inf = dic.ContainsKey(prp.Name) ? dic[prp.Name] : null;
+        if (inf is not null)
+        {
+            var exp = CommonMdl.GetExpression<CurModel, object>(typeof(CurModel), prp.Name);
+            <div id="temp-model-@(prp.Name)">
+                @if (inf.Type == "text")
+                    @Html.TextBoxFor(exp, inf.Attr)
+                else if (inf.Type == "textarea")
+                    @Html.TextAreaFor(exp, inf.Attr)
+                else if (inf.Type == "drop")
+                    @Html.DropDownListFor(exp, inf.SelectList, inf.Attr)
+                else if (inf.Type == "drop")
+                @Html.ValidationMessageFor(exp)
+            </div>
+        }
+    }
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#templates').children('div').each((idx, elm) => {
+            let tmp_id = $(elm).attr('id')
+            $(`#${$(elm).attr('id').substring(5)}`).html($(elm).html())
+        })
+    })
+</script>

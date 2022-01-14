@@ -44,7 +44,7 @@ namespace tutorial_mvc.Controllers
 		}
 
 		[HttpPost]
-		public IActionResult Test2(Test m)
+		public IActionResult Test2(CurModel m)
 		{
 			this._logger.LogInformation($"{nameof(m.Text)}: {m.Text}");
 			// this._logger.LogInformation($"{nameof(m.Drop)}: {m.Drop}");
@@ -65,7 +65,7 @@ namespace tutorial_mvc.Controllers
 			//     }
 			// }
 
-			this.InitData(m);
+			// this.InitData(m);
 			return View(m);
 		}
 
