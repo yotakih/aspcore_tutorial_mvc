@@ -1,0 +1,22 @@
+﻿@model tutorial_mvc.Models.Test3
+@using MyApp
+@using MyApp.Helpers
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@using (Html.BeginForm(method: FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <div>@Html.TextBoxFor(m => m.Text)</div>
+    <div>@Html.Test(m => m.Text2)</div>
+    <div>@Html.TextBoxFor(m => m.Inner.Text)</div>
+    <div>@Html.Test(m => m.Inner.Text2)</div>
+    @for (int i = 0; i < Model.Inner.Lst.Count; i++)
+    {
+        <div>@Html.TextBoxFor(m => Model.Inner.Lst[i])</div>
+    }
+    @for (int i = 0; i < Model.Inner.Lst2.Count; i++)
+    {
+        <div>@Html.Test(m => Model.Inner.Lst2[i])</div>
+    }
+    <a asp-controller="Home" asp-action="Test2">Test2</a>
+    <button>submit</button>
+}
